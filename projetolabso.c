@@ -102,8 +102,11 @@ void *threadFunc(void *arg)
             printf("\n sorria pro print! :D\n");
             nivel2 = 2;
         }else if(c=='2'){
-            printf("Voce e um cara indeciso! >:@");
+            printf("Ajustando engrenagens do relógio!");
             nivel2 = 3;
+        }else if(c=='9'){
+            printf("\nfinalizando...\n\n");
+            exit(1);
         }                 
     }
 
@@ -155,15 +158,21 @@ pai (int readfd, int writefd)
     else if(nivel2!=0)
     {        
         system("clear");
-        if(nivel2==2){
-            printf("\nPrint Screen tirado com sucesso!\n--------------------------------\n\n");
-        }
+        
         if(nivel2==1){
             printf("\nParabens! Voce conseguiu ganhar a shell com sucesso!\n----------------------------------------------------\n\n");
         }
+        if(nivel2==2){
+            printf("\nPrint Screen tirado com sucesso!\n--------------------------------\n\n");
+        }
+        if(nivel2==3){
+            x = 0;
+            printf("\nTimer zerado com sucesso!\n--------------------------\n\n");
+        }
         printf("Aperte a tecla referente a funcao que deseja utilizar: \n");
         printf("\n[1] - Tirar print screen da tela");
-        printf("\n[2] - Outro");
+        printf("\n[2] - Zerar Timer");
+        printf("\n[9] - Sair");
         printf("\n\nTempo decorrido = %d \n\n",x);
         system("sleep 1");
     }
