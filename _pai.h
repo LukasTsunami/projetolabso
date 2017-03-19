@@ -6,13 +6,16 @@ pai (int readfd, int writefd)
   pthread_t pth;	// identificador da thread
 
   int tira_apenas_um_print_screen_por_vez = 0; //vai precisar de mutex
+  int abre_apenas_uma_janela = 0;
 
   pthread_mutex_t mutexPrint;
-
   pthread_mutex_init(&mutexPrint,NULL);  
-
+  
+  pthread_mutex_t mutexAbreNovaJanela;
+  pthread_mutex_init(&mutexAbreNovaJanela,NULL);  
+  
   pthread_create(&pth,NULL,threadFunc,&nivel2);
-	
+
   char PIPERecebido[BUFFPIPE];
   char *informacoes;
   char *hostname;
@@ -47,27 +50,49 @@ pai (int readfd, int writefd)
     {        
         system("clear");
         
-        if(nivel2==1){
+        if(nivel2==1)
+        {
             printf("\nParabens! Voce conseguiu ganhar a shell com sucesso!\n----------------------------------------------------\n\n");
         }
-        if(nivel2==2){
+
+        if(nivel2==2)
+        {
             printf("\nPrint Screen tirado com sucesso!\n--------------------------------\n\n");
-            if(tira_apenas_um_print_screen_por_vez == 0){
+            if(tira_apenas_um_print_screen_por_vez == 0)
+            {
                 system("import -window root tela.png");
                 pthread_mutex_lock(&mutexPrint);
                     tira_apenas_um_print_screen_por_vez = 1;
                 pthread_mutex_unlock(&mutexPrint);
             }
-        }else{
-            if(tira_apenas_um_print_screen_por_vez!=0){
+        }
+        else
+        {
+            if(tira_apenas_um_print_screen_por_vez!=0)
+            {
                 pthread_mutex_lock(&mutexPrint);
                     tira_apenas_um_print_screen_por_vez = 0;
                 pthread_mutex_unlock(&mutexPrint);
             }
         }
-        if(nivel2==3){
+
+        if(nivel2==3)
+        {
             x = 0;
             printf("\nTimer zerado com sucesso!\n--------------------------\n\n");
+        }
+
+        if(nivel2==4)
+        {
+            printf("teste");
+            if(abre_apenas_uma_janela==0){
+                novaJanela();
+            }
+
+            pthread_mutex_lock(&mutexAbreNovaJanela);
+                abre_apenas_uma_janela = 1;
+            pthread_mutex_unlock(&mutexAbreNovaJanela);
+
         }
 
         printf("Aperte a tecla referente a funcao que deseja utilizar: \n");
@@ -75,6 +100,7 @@ pai (int readfd, int writefd)
         printf("\n[0] - Voltar");
         printf("\n[1] - Tirar print screen da tela");
         printf("\n[2] - Zerar Timer");
+        printf("\n[3] - Abrir nova janela de terminal com o TOP carregado");
         printf("\n[ESC] - Sair");
         printf("\n\nTempo decorrido = %d \n\n",x);
         system("sleep 1");

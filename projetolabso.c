@@ -6,9 +6,9 @@
 #include <stdlib.h>
 #include <semaphore.h>
 #include "_thread.h"
+#include "_novaJanela.h"
 #include "_pai.h"
 #include "_filho.h"
-
 int main(){
 
   int	descritor,  // usado para criar o processo filho pelo fork

@@ -33,6 +33,11 @@ void *threadFunc(void *nivel2)
                 *aux_nivel = 3;
                 break;
             
+            case '3':
+                printf("nova janela saindo...");
+                *aux_nivel = 4;
+                break;
+
             case '\e':
                 printf("\nfinalizando...\n\n");
                 exit(1);
