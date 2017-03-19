@@ -4,7 +4,7 @@ pai (int readfd, int writefd)
   int nivel2 = 0; //variável responsável por entrar no "nível 2", ao ganhar a shell 
                 //a idéia é usar ela como mutex depois
   pthread_t pth;	// identificador da thread
-  int i = 0;
+  int tira_apenas_um_print_screen_por_vez = 0; //vai precisar de mutex
 
   pthread_create(&pth,NULL,threadFunc,&nivel2);
 	
@@ -47,11 +47,16 @@ pai (int readfd, int writefd)
         }
         if(nivel2==2){
             printf("\nPrint Screen tirado com sucesso!\n--------------------------------\n\n");
+            if(tira_apenas_um_print_screen_por_vez == 0){
+                system("import -window root tela.png");
+                tira_apenas_um_print_screen_por_vez = 1;
+            }
         }
         if(nivel2==3){
             x = 0;
             printf("\nTimer zerado com sucesso!\n--------------------------\n\n");
         }
+
         printf("Aperte a tecla referente a funcao que deseja utilizar: \n");
         
         printf("\n[0] - Voltar");

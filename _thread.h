@@ -1,4 +1,5 @@
 #include <pthread.h>
+#include "_desconsideraEnter.h"
 
 void *threadFunc(void *nivel2)
 {

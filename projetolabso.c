@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "_desconsideraEnter.h"
+#include <semaphore.h>
 #include "_thread.h"
 #include "_pai.h"
 #include "_filho.h"
