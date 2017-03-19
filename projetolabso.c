@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "_inicializacaoDeVariaveisGlobais.h"
 #include "_desconsideraEnter.h"
 #include "_thread.h"
 #include "_pai.h"
 #include "_filho.h"
+
+#define BUFFPIPE 10000 // BUFFER TOTAL DO PIPE A SER ENVIADO PARA O PAI
+#define BUFF 1024   //BUFFER PARA SYSTEM'S CALL
 
 int main(){
 
@@ -13,8 +15,7 @@ int main(){
 	pipe1[2],  // comunicacao pai -> filho
 	pipe2[2];  // comunicacao filho -> pai
 
-
-   if (pipe(pipe1)<0 || pipe(pipe2) <0)
+	if (pipe(pipe1)<0 || pipe(pipe2) <0)
 	{
     printf("Erro na chamada PIPE");
 	  exit(0);

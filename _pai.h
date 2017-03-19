@@ -1,11 +1,12 @@
 
 pai (int readfd, int writefd)
 {
-
+  int nivel2 = 0; //variável responsável por entrar no "nível 2", ao ganhar a shell 
+                //a idéia é usar ela como mutex depois
   pthread_t pth;	// this is our thread identifier
   int i = 0;
 
-  pthread_create(&pth,NULL,threadFunc,"foo");
+  pthread_create(&pth,NULL,threadFunc,&nivel2);
 	
   char PIPERecebido[BUFFPIPE];
   char *informacoes;
@@ -52,6 +53,8 @@ pai (int readfd, int writefd)
             printf("\nTimer zerado com sucesso!\n--------------------------\n\n");
         }
         printf("Aperte a tecla referente a funcao que deseja utilizar: \n");
+        
+        printf("\n[0] - Voltar");
         printf("\n[1] - Tirar print screen da tela");
         printf("\n[2] - Zerar Timer");
         printf("\n[9] - Sair");
