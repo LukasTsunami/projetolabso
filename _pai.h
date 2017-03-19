@@ -3,7 +3,7 @@ pai (int readfd, int writefd)
 {
   int nivel2 = 0; //variável responsável por entrar no "nível 2", ao ganhar a shell 
                 //a idéia é usar ela como mutex depois
-  pthread_t pth;	// this is our thread identifier
+  pthread_t pth;	// identificador da thread
   int i = 0;
 
   pthread_create(&pth,NULL,threadFunc,&nivel2);
@@ -57,7 +57,7 @@ pai (int readfd, int writefd)
         printf("\n[0] - Voltar");
         printf("\n[1] - Tirar print screen da tela");
         printf("\n[2] - Zerar Timer");
-        printf("\n[9] - Sair");
+        printf("\n[ESC] - Sair");
         printf("\n\nTempo decorrido = %d \n\n",x);
         system("sleep 1");
     }

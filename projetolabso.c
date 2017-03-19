@@ -1,3 +1,6 @@
+#define BUFFPIPE 10000 // BUFFER TOTAL DO PIPE A SER ENVIADO PARA O PAI
+#define BUFF 1024   //BUFFER PARA SYSTEM'S CALL
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -5,9 +8,6 @@
 #include "_thread.h"
 #include "_pai.h"
 #include "_filho.h"
-
-#define BUFFPIPE 10000 // BUFFER TOTAL DO PIPE A SER ENVIADO PARA O PAI
-#define BUFF 1024   //BUFFER PARA SYSTEM'S CALL
 
 int main(){
 
