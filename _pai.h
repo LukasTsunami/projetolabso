@@ -30,6 +30,7 @@ pai (int readfd, int writefd)
     x++;
     if(nivel2==0)
     {
+	system("clear");
         read(readfd,PIPERecebido,BUFFPIPE);
         informacoes = strtok(PIPERecebido, "\n");
         hostname = informacoes;
@@ -39,12 +40,11 @@ pai (int readfd, int writefd)
         cpuUsage = strtok(NULL,"\n");
 
         printf("Hostname\tIP-Local\tMemoria Utilizada/Total\t\tCPU\n");
-        printf("%s\t\t%s\t\t%s/%s\t\t%s\n",hostname,iplocal,memUsed,memTotal,cpuUsage);
+        printf("%s\t\t%s\t\t%s/%s MBs\t\t%s%\n",hostname,iplocal,memUsed,memTotal,cpuUsage);
         printf("\n\n\n\n\n\n\n\n\n\t\tPressione a tecla [S] para controlar\n");
         informacoes = NULL;
 
-        system("sleep 0.6");
-        system("clear");
+        system("sleep 0.6");        
     }
     else if(nivel2!=0)
     {        
@@ -52,7 +52,7 @@ pai (int readfd, int writefd)
         
         if(nivel2==1)
         {
-            printf("\nParabens! Voce conseguiu ganhar a shell com sucesso!\n----------------------------------------------------\n\n");
+            printf("\n----------------------------------------------------\n\n");
         }
 
         if(nivel2==2)
@@ -84,7 +84,6 @@ pai (int readfd, int writefd)
 
         if(nivel2==4)
         {
-            printf("teste");
             if(abre_apenas_uma_janela==0){
                 novaJanela();
             }
@@ -94,6 +93,10 @@ pai (int readfd, int writefd)
             pthread_mutex_unlock(&mutexAbreNovaJanela);
 
         }
+	if(nivel2==5)
+	{
+			
+	}
 
         printf("Aperte a tecla referente a funcao que deseja utilizar: \n");
         
@@ -101,6 +104,7 @@ pai (int readfd, int writefd)
         printf("\n[1] - Tirar print screen da tela");
         printf("\n[2] - Zerar Timer");
         printf("\n[3] - Abrir nova janela de terminal com o TOP carregado");
+        printf("\n[4] - Abrir uma SHELL");
         printf("\n[ESC] - Sair");
         printf("\n\nTempo decorrido = %d \n\n",x);
         system("sleep 1");

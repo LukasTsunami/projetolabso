@@ -13,8 +13,7 @@ void *threadFunc(void *nivel2)
 
         switch(c)
         {
-            case 's':
-                printf("\nGanhando a shell, aguarde!\n");
+            case 's':                
                 *aux_nivel = 1;
                 break;
             
@@ -24,7 +23,7 @@ void *threadFunc(void *nivel2)
                 break;
 
             case '1':    
-                printf("\n sorria pro print! :D\n");
+                printf("\n Sorria pro print! :D\n");
                 *aux_nivel = 2;
                 break;
 
@@ -37,6 +36,11 @@ void *threadFunc(void *nivel2)
                 printf("nova janela saindo...");
                 *aux_nivel = 4;
                 break;
+
+            case '4':
+		printf("SHELL ! !");
+		*aux_nivel = 5;
+		break;
 
             case '\e':
                 printf("\nfinalizando...\n\n");

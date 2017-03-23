@@ -18,7 +18,7 @@ filho(int readfd,int writefd)
       printf("ERROR 404");
 
     strcat(enviaPorPipe, buff);
-
+    strcat(enviaPorPipe, "\n");
     pclose(fp);
 
 

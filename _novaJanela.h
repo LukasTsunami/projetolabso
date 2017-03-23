@@ -1,5 +1,5 @@
 void novaJanela()
 {
-    system("konsole --hold -e top");
+    system("gnome-terminal -x top");
     sleep(2); 
 }
