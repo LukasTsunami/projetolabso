@@ -4,16 +4,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <semaphore.h>
 #include "_thread.h"
 #include "_novaJanela.h"
 #include "_pai.h"
 #include "_filho.h"
+
 int main(){
 
-  int	descritor,  // usado para criar o processo filho pelo fork
-	pipe1[2],  // comunicacao pai -> filho
-	pipe2[2];  // comunicacao filho -> pai
+  int	descritor,   // usado para criar o processo filho pelo fork
+	pipe1[2],       // comunicacao pai -> filho
+	pipe2[2];      // comunicacao filho -> pai
 
 	if (pipe(pipe1)<0 || pipe(pipe2) <0)
 	{
@@ -21,14 +21,14 @@ int main(){
 	  exit(0);
 	}
 
-   //   Fork para criar o processo filho
+   //Fork para criar o processo filho
 
   if ( (descritor = fork()) <0)
 	{
     printf("Erro na chamada FORK");
     exit(0);
   }
- 
+
 
 	else if (descritor >0)  // PROCESSO PAI
 	   {
@@ -39,7 +39,7 @@ int main(){
 
 		close(pipe1[1]); // fecha pipe1
 		close(pipe2[0]);  // fecha pipe2
-    printf("Processo pai encerrado!");
+
 		exit(0);
 
 	    } // FIM DO PROCESSO PAI
@@ -53,10 +53,8 @@ int main(){
 
 		close(pipe1[0]); // fecha leitura no pipe1
 		close(pipe2[1]);  // fecha escrita no pipe2
-    printf("Processo filho encerrado!");
+    
 		exit(0);
 
 	}
 }
-
-

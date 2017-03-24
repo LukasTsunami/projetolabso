@@ -1,4 +1,3 @@
-
 filho(int readfd,int writefd)
 {
   char *getHostname = "cat /etc/hostname"; //Recupera o Hostname
@@ -11,107 +10,85 @@ filho(int readfd,int writefd)
   FILE *fp;
 
   int controle = -1;
-  pthread_t pth;	// identificador da thread
-
-  int tira_apenas_um_print_screen_por_vez = 0; //vai precisar de mutex
-  int abre_apenas_uma_janela = 0;
-
-  pthread_mutex_t mutexPrint;
-  pthread_mutex_init(&mutexPrint,NULL);  
-  pthread_mutex_t mutexAbreNovaJanela;
-  pthread_mutex_init(&mutexAbreNovaJanela,NULL);  
- 
+  pthread_t pth;  	// identificador da thread
   pthread_create(&pth,NULL,threadFunc,&controle);
-
 
   while(1)
   {
-   switch(controle)
-   {
-	case -1:    
-		if((fp = popen(getHostname, "r")) == NULL)
-		printf("ERROR 404");
-		if(fgets(buff, BUFF, fp) == NULL)
-		printf("ERROR 404");
+    switch(controle)
+    {
+      case 9999:
+        sprintf(enviaPorPipe, "%d", controle);
+        strcat(enviaPorPipe, "\n");
+      break;
 
-		strcat(enviaPorPipe, buff);
-		strcat(enviaPorPipe, "\n");
-		pclose(fp);
+      case -1:
+        sprintf(enviaPorPipe, "%d", controle);
+        strcat(enviaPorPipe, "\n");
 
+      	if((fp = popen(getHostname, "r")) == NULL)
+      	printf("ERROR 404");
+      	if(fgets(buff, BUFF, fp) == NULL)
+      	printf("ERROR 404");
 
-		if((fp = popen(getIPLocal, "r")) == NULL)
-		printf("ERROR 404");
-		if(fgets(buff, BUFF, fp) == NULL)
-		printf("ERROR 404");
-
-		strcat(enviaPorPipe, buff);
-		pclose(fp);
-
-		if((fp = popen(getMemUsed, "r")) == NULL)
-		printf("ERROR 404");
-		if(fgets(buff, BUFF, fp) == NULL)
-		printf("ERROR 404");
-
-		strcat(enviaPorPipe, buff);
-		pclose(fp);
-
-		if((fp = popen(getMemTotal, "r")) == NULL)
-		printf("ERROR 404");
-		if(fgets(buff, BUFF, fp) == NULL)
-		printf("ERROR 404");
-
-		strcat(enviaPorPipe, buff);
-		pclose(fp);
-
-		if((fp = popen(getCPUusage, "r")) == NULL)
-		printf("ERROR 404");
-		if(fgets(buff, BUFF, fp) == NULL)
-		printf("ERROR 404");
-
-		strcat(enviaPorPipe, buff);
-		pclose(fp);
+      	strcat(enviaPorPipe, buff);
+      	strcat(enviaPorPipe, "\n");
+      	pclose(fp);
 
 
-		write(writefd, enviaPorPipe, BUFFPIPE);
-		enviaPorPipe[0] = '\0';
-	break;
-    
-	case 1:
-		if(tira_apenas_um_print_screen_por_vez == 0)
-		{
-			system("import -window root tela.png");
-			pthread_mutex_lock(&mutexPrint);
-			    tira_apenas_um_print_screen_por_vez = 1;
-			pthread_mutex_unlock(&mutexPrint);
-		}
+      	if((fp = popen(getIPLocal, "r")) == NULL)
+      	printf("ERROR 404");
+      	if(fgets(buff, BUFF, fp) == NULL)
+      	printf("ERROR 404");
 
-		else
-		{
-		if(tira_apenas_um_print_screen_por_vez!=0)
-		{
-			pthread_mutex_lock(&mutexPrint);
-			    tira_apenas_um_print_screen_por_vez = 0;
-			pthread_mutex_unlock(&mutexPrint);
-		}
-		}
-	break;
+      	strcat(enviaPorPipe, buff);
+      	pclose(fp);
 
-        case 2:
-            x = 0;
-        break;
+      	if((fp = popen(getMemUsed, "r")) == NULL)
+      	printf("ERROR 404");
+      	if(fgets(buff, BUFF, fp) == NULL)
+      	printf("ERROR 404");
 
-        case 3:
-		if(abre_apenas_uma_janela==0){
-		novaJanela();
-		}
+      	strcat(enviaPorPipe, buff);
+      	pclose(fp);
 
-		pthread_mutex_lock(&mutexAbreNovaJanela);
-		abre_apenas_uma_janela = 1;
-		pthread_mutex_unlock(&mutexAbreNovaJanela);
-        break;
+      	if((fp = popen(getMemTotal, "r")) == NULL)
+      	printf("ERROR 404");
+      	if(fgets(buff, BUFF, fp) == NULL)
+      	printf("ERROR 404");
 
-	default:
-	break;
-  }
-}
+      	strcat(enviaPorPipe, buff);
+      	pclose(fp);
+
+      	if((fp = popen(getCPUusage, "r")) == NULL)
+      	printf("ERROR 404");
+      	if(fgets(buff, BUFF, fp) == NULL)
+      	printf("ERROR 404");
+
+      	strcat(enviaPorPipe, buff);
+      	pclose(fp);
+
+      break;
+
+      case 0:
+        sprintf(enviaPorPipe, "%d", controle);
+        strcat(enviaPorPipe, "\n");
+
+      break;
+
+      case 1:
+      		system("import -window root tela.png");
+          controle = 0;
+      break;
+
+      case 2:
+      	novaJanela();
+        controle = 0;
+      break;
+
+      default:
+      break;
+      }
+      write(writefd, enviaPorPipe, BUFFPIPE);
+      }
 }
